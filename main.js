@@ -5,12 +5,18 @@ const menuHamIcon = document.querySelector(".menu");
 const mobileMenu = document.querySelector(".mobile-menu");
 
 const menuCarritoIcon = document.querySelector(".navbar-shopping-cart");
+
+const productDetailCloseIcon = document.querySelector('.product-detail-close')
+
 const shoppingCartContainer = document.querySelector("#shoppingCartContainer");
+const productDetailContainer = document.querySelector("#productDetail");
 const cardsContainer = document.querySelector(".cards-container");
 
 menuEmail.addEventListener("click", toggleDesktopMenu);
 menuHamIcon.addEventListener("click", toggleMobileMenu);
 menuCarritoIcon.addEventListener("click", toggleCarritoAside);
+productDetailCloseIcon.addEventListener('click', closeProductDetailAside);
+
 
 
 function toggleDesktopMenu() {
@@ -23,30 +29,46 @@ function toggleDesktopMenu() {
 }
 
 function toggleMobileMenu() {
+
   const isAsideClosed = shoppingCartContainer.classList.contains("inactive");
 
   if (!isAsideClosed) {
     shoppingCartContainer.classList.add("inactive");
   }
 
+  closeProductDetailAside();
+
   mobileMenu.classList.toggle("inactive");
 }
 
 function toggleCarritoAside() {
-  console.log("Hola");
 
   const isMobileMenuClosed = mobileMenu.classList.contains("inactive");
-
-  // shoppingCartContainer.classList.toggle('inactive');
-
   //abrir el shoppingCartContainer
   if (!isMobileMenuClosed) {
     mobileMenu.classList.add("inactive");
   }
 
+  const isProductDetailClosed = productDetailContainer.classList.contains("inactive");
+  //abrir el shoppingCartContainer
+  if (!isProductDetailClosed) {
+    productDetailContainer.classList.add("inactive");
+  }
+
   shoppingCartContainer.classList.toggle("inactive");
 }
 
+function openProductDetailAside(){
+  shoppingCartContainer.classList.add('inactive');
+
+  productDetailContainer.classList.remove('inactive');
+
+}
+
+function closeProductDetailAside(){
+  productDetailContainer.classList.add('inactive');
+
+}
 const productList = [];
 productList.push({
   name: "Bike",
@@ -97,6 +119,8 @@ function renderProducts(arr){
       
         const ProductImg = document.createElement("img");
         ProductImg.setAttribute("src", product.image);
+
+        ProductImg.addEventListener('click', openProductDetailAside)
       
         const productInfo = document.createElement("div");
         productInfo.classList.add("product-info");
